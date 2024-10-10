@@ -8,6 +8,7 @@ import 'package:nghia_flutter_clean/features/domain/repositories/repo_repository
 import 'package:nghia_flutter_clean/features/domain/usecases/fetch_repo_list_usecase.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:async';
 
 final getIt = GetIt.instance;
 
@@ -46,3 +47,36 @@ void configureOtherDependencies() async {
   final sharedPreferences = await SharedPreferences.getInstance();
   getIt.registerLazySingleton(() => sharedPreferences);
 }
+
+/*class ConfigureDependenciesManual {
+  // Other
+  late final networkInfo = NetworkInfoImpl(getIt());
+  late final httpClient = http.Client();
+  late final dataConnectionChecker = DataConnectionChecker();
+  late final SharedPreferences sharedPreferences;
+
+  // Use Case
+  late final fetchRepoListUseCase = FetchRepoListUseCase(getIt());
+
+  // Repo
+  late final repoRepository = RepoRepositoryImpl(getIt(), getIt(), getIt(), getIt());
+
+  // Remote Data Source
+  late final RepoRemoteDataSourceImpl repoRemoteDataSource;
+
+  // Local Data Source
+  late final RepoLocalDataSourceImpl repoLocalDataSource;
+
+  Future init() async {
+    // Other
+    sharedPreferences = await SharedPreferences.getInstance();
+    ...
+
+    // Remote Data Source
+    repoRemoteDataSource = RepoRemoteDataSourceImpl();
+
+    // Local Data Source
+    repoLocalDataSource = RepoLocalDataSourceImpl(sharedPreferences);
+
+  }
+}*/
