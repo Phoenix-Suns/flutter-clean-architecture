@@ -48,18 +48,20 @@ void configureOtherDependencies() async {
   getIt.registerLazySingleton(() => sharedPreferences);
 }
 
-/*class ConfigureDependenciesManual {
+// Tự tạo DI bằng tay
+/*
+class ConfigureDependenciesManual {
   // Other
-  late final networkInfo = NetworkInfoImpl(getIt());
-  late final httpClient = http.Client();
-  late final dataConnectionChecker = DataConnectionChecker();
+  late final NetworkInfoImpl networkInfo;
+  late final http.Client httpClient;
+  late final DataConnectionChecker dataConnectionChecker;
   late final SharedPreferences sharedPreferences;
 
   // Use Case
-  late final fetchRepoListUseCase = FetchRepoListUseCase(getIt());
+  late final FetchRepoListUseCase fetchRepoListUseCase;
 
   // Repo
-  late final repoRepository = RepoRepositoryImpl(getIt(), getIt(), getIt(), getIt());
+  late final RepoRepositoryImpl repoRepository;
 
   // Remote Data Source
   late final RepoRemoteDataSourceImpl repoRemoteDataSource;
@@ -70,7 +72,9 @@ void configureOtherDependencies() async {
   Future init() async {
     // Other
     sharedPreferences = await SharedPreferences.getInstance();
-    ...
+    dataConnectionChecker = DataConnectionChecker();
+    httpClient = http.Client();
+    networkInfo = NetworkInfoImpl(dataConnectionChecker);
 
     // Remote Data Source
     repoRemoteDataSource = RepoRemoteDataSourceImpl();
@@ -78,5 +82,24 @@ void configureOtherDependencies() async {
     // Local Data Source
     repoLocalDataSource = RepoLocalDataSourceImpl(sharedPreferences);
 
+    // Repo
+    repoRepository = RepoRepositoryImpl(httpClient, repoRemoteDataSource, networkInfo, repoLocalDataSource);
+
+    // Use Case
+    fetchRepoListUseCase = FetchRepoListUseCase(repoRepository);
   }
-}*/
+}
+
+late final ConfigureDependenciesManual dependencies;
+void main() async {
+  await dependencies.init();
+}
+
+class _RepoListProviderPageState extends State<RepoListProviderPage> {
+  final TextEditingController _controller = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    final RepoListViewModel vm = RepoListViewModel(dependencies.fetchRepoListUseCase);
+  }
+*/

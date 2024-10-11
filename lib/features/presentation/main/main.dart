@@ -6,9 +6,12 @@ import 'package:nghia_flutter_clean/features/presentation/pages/home_page.dart';
 import 'package:nghia_flutter_clean/features/presentation/pages/repo_list/provider/repo_list_viewmodel.dart';
 import 'package:provider/provider.dart';
 
+//late final ConfigureDependenciesManual dependencies;
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await configureDependencies();
+  //await dependencies.init();
   runApp(
     MultiProvider(
       providers: [

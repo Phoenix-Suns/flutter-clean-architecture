@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nghia_flutter_clean/features/data/models/repo.dart';
+import 'package:nghia_flutter_clean/features/presentation/main/main.dart';
 import 'package:nghia_flutter_clean/features/presentation/pages/repo_list/bloc/repo_list_bloc.dart';
 import 'package:nghia_flutter_clean/features/presentation/pages/repo_list/provider/repo_list2_state.dart';
 import 'package:nghia_flutter_clean/features/presentation/pages/repo_list/provider/repo_list_viewmodel.dart';
@@ -18,6 +19,7 @@ class _RepoListProviderPageState extends State<RepoListProviderPage> {
 
   @override
   Widget build(BuildContext context) {
+    //final RepoListViewModel vm = RepoListViewModel(dependencies.fetchRepoListUseCase);
     final vm = Provider.of<RepoListViewModel>(context, listen: true);
 
     return Scaffold(
